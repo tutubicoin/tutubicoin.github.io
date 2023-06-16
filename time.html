@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .clock {
+      position: relative;
+      width: 600px;
+      height: 600px;
+      margin: 30px auto;
+      background: url(./images/clock.jpg) no-repeat center;
+    }
+
+    .clock .h {
+      position: absolute;
+      top: 32%;
+      left: 50%;
+      width: 20px;
+      height: 118px;
+      margin-left: -10px;
+      background: url(./images/hour.png) no-repeat -5px -192px;
+      transform-origin: calc(100% - 10px) 93%;
+    }
+
+    .clock .m {
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      width: 12px;
+      height: 185px;
+      margin-left: -6px;
+      background: url(./images/minute.png) no-repeat -9px -121px;
+      transform-origin: calc(100% - 6px) 98%;
+    }
+
+    .clock .s {
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      width: 24px;
+      height: 251px;
+      margin-left: -12px;
+      background: url(./images/second.png) no-repeat -3px -117px;
+      transform-origin: calc(100% - 12px) 73%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="clock">
+    <div class="h"></div>
+    <div class="m"></div>
+    <div class="s"></div>
+  </div>
+  <script>
+    // 封装时钟效果，定时器定时调用的函数
+    function getCurrentTime() {
+      // 获取当前时间
+      const currentTime = new Date()
+      const hour = currentTime.getHours()
+      const minute = currentTime.getMinutes()
+      const second = currentTime.getSeconds()
+
+      //时钟动画效果
+      // 角度换算： 公式复制即可
+      //   小时角度公式：小时 * 30 + 分钟 / 60 * 30 
+      //   分钟角度公式：分钟* 6 + 秒 / 60 * 6
+      //   秒角度公式： 当前秒数 * 6
+      ss.style.transform = `rotate(${second * 6}deg)`
+      mm.style.transform = `rotate(${minute * 6 + second / 60 * 6}deg)`
+      hh.style.transform = `rotate(${hour * 30 + minute / 60 * 30}deg)`
+
+    }
+
+    // 获取时分秒针dom元素
+    const ss = document.querySelector('.s')
+    const mm = document.querySelector('.m')
+    const hh = document.querySelector('.h')
+
+    // 页面刷新时设置指针的初始位置
+    getCurrentTime()
+
+    // 每隔一秒获取一次时间 
+    setInterval(getCurrentTime, 1000)
+  </script>
+</body>
+
+</html>
